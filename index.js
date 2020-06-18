@@ -7,37 +7,33 @@ async function run() {
   try {
     
     const serviceAccountFile = `/tmp/${(new Date()).getTime()}.json`;
-    
+    const projectName = core.getInput('project-name');
+    const isDebug = core.getInput('debug');
+
     core.startGroup('Processing SERVICE_ACCOUNT');
-
     console.log('Copy SERVICE_ACCOUNT');
+    fs.writeFileSync(serviceAccountFile, core.getInput('service-account'));
 
-    await fs.promises.writeFile(serviceAccountFile, core.getInput('service-account'))
-
-    const serviceCount = await fs.promises.readFile(serviceAccountFile, 'utf8');
-
-    // fs.writeFileSync(serviceAccountFile, core.getInput('service-account'));
-
-    console.log(serviceCount)
-    
-    const serviceAccountParsed = JSON.parse(serviceAccountFile);
-    
-    console.log(serviceAccountParsed)
-
+    console.log('Activate SERVICE_ACCOUNT');
+    execSync(`gcloud auth activate-service-account --key-file ${serviceAccountFile}`, { stdio: 'inherit' });
     core.endGroup();
-    
-    // console.log('Activate SERVICE_ACCOUNT');
-    // execSync(`gcloud auth activate-service-account --key-file ${serviceAccountFile}`, {stdio: 'inherit'});
-    // core.endGroup();
 
-    // core.startGroup('Set GCP Project');
-    // execSync(`gcloud config set project ${serviceAccountParsed.}`, {stdio: 'inherit'});
-    // core.endGroup();
+    core.startGroup('Set GCP Project');
+    execSync(`gcloud config set project ${projectName}`, {stdio: 'inherit'});
+    core.endGroup();
 
-    // core.startGroup('Depoy GAE project');
-    // execSync(`gcloud app deploy`, {stdio: 'inherit'});
-    // core.endGroup();
-    
+    if (isDebug) {
+
+      core.startGroup('GAE project info');
+      execSync(`gcloud info`, {stdio: 'inherit'});
+      core.endGroup();
+    } else {
+
+      core.startGroup('Depoy GAE project');
+      execSync(`gcloud app deploy`, {stdio: 'inherit'});
+      core.endGroup();
+    }
+
     core.startGroup(' SERVICE_ACCOUNT');
     console.log('Remove SERVICE_ACCOUNT');
     fs.unlinkSync(serviceAccountFile);

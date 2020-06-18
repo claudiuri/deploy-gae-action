@@ -1,9 +1,15 @@
 name: 'Deploy App Engine'
 description: 'Greet someone and record the time'
 inputs:
-  service-account:  # id of input
+  service-account:
     description: 'Service account file'
     required: true
+  project-name:
+    description: 'Project name'
+    required: true
+  debug:
+    description: 'Debug action'
+    dafault: false
 # outputs:
 #   projectName: # id of output
 #     description: 'Project name in service account file'
