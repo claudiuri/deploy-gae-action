@@ -3,13 +3,13 @@ on: [push]
 jobs:
   hello_world_job:
     runs-on: ubuntu-latest
-    name: A job to say hello
+    name: A job to say service count
     steps:
-    - name: Hello world action step
-      id: hello
+    - name: Deploy App Engine
+      id: deploy
       uses: claudiuri/deploy-gae-action@master
       with:
-        who-to-greet: 'Claudio'
+        service-account:  ${{ secrets.SERVICE_ACCOUNT }}
     # Use the output from the `hello` step
-    - name: Get the output time
-      run: echo "The time was ${{ steps.hello.outputs.time }}"
+    # - name: Get the output time
+    #   run: echo "The time was ${{ steps.hello.outputs.time }}"

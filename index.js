@@ -1,15 +1,44 @@
 const core = require('@actions/core');
-const github = require('@actions/github');
+const execSync = require('child_process').execSync;
+const fs = require('fs');
 
-try {
-  // `who-to-greet` input defined in action metadata file
-  const nameToGreet = core.getInput('who-to-greet');
-  console.log(`Hello ${nameToGreet}!`);
-  const time = (new Date()).toTimeString();
-  core.setOutput("time", time);
-  // Get the JSON webhook payload for the event that triggered the workflow
-  const payload = JSON.stringify(github.context.payload, undefined, 2)
-  console.log(`The event payload: ${payload}`);
-} catch (error) {
-  core.setFailed(error.message);
+// most @actions toolkit packages have async methods
+async function run() {
+  try {
+    
+    const serviceAccountFile = `/tmp/${(new Date()).getTime()}.json`;
+    
+    core.startGroup('Processing SERVICE_ACCOUNT');
+    
+    console.log('Copy SERVICE_ACCOUNT');
+
+    fs.writeFileSync(serviceAccountFile, core.getInput('service-account'));
+
+    const serviceAccountParsed = JSON.parse(serviceAccountFile);
+
+    console.log(serviceAccountParsed)
+
+
+    // console.log('Activate SERVICE_ACCOUNT');
+    // execSync(`gcloud auth activate-service-account --key-file ${serviceAccountFile}`, {stdio: 'inherit'});
+    // core.endGroup();
+
+    // core.startGroup('Set GCP Project');
+    // execSync(`gcloud config set project ${serviceAccountParsed.}`, {stdio: 'inherit'});
+    // core.endGroup();
+
+    // core.startGroup('Depoy GAE project');
+    // execSync(`gcloud app deploy`, {stdio: 'inherit'});
+    // core.endGroup();
+    
+    core.startGroup(' SERVICE_ACCOUNT');
+    console.log('Remove SERVICE_ACCOUNT');
+    fs.unlinkSync(serviceAccountFile);
+    core.endGroup();
+  } 
+  catch (error) {
+    core.setFailed(error.message);
+  }
 }
+
+run();

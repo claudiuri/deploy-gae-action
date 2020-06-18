@@ -1,13 +1,12 @@
-name: 'Hello World'
+name: 'Deploy App Engine'
 description: 'Greet someone and record the time'
 inputs:
-  who-to-greet:  # id of input
-    description: 'Who to greet'
+  service-account:  # id of input
+    description: 'Service account file'
     required: true
-    default: 'World'
-outputs:
-  time: # id of output
-    description: 'The time we greeted you'
+# outputs:
+#   projectName: # id of output
+#     description: 'Project name in service account file'
 runs:
   using: 'node12'
   main: 'index.js'
