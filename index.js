@@ -14,12 +14,11 @@ async function run() {
 
     fs.writeFileSync(serviceAccountFile, core.getInput('service-account'));
 
-    const serviceAccountParsed = JSON.parse(serviceAccountFile);
-
     console.log(core.getInput('service-account'))
     console.log(serviceAccountFile)
     console.log(serviceAccountParsed)
 
+    const serviceAccountParsed = JSON.parse(serviceAccountFile);
 
     // console.log('Activate SERVICE_ACCOUNT');
     // execSync(`gcloud auth activate-service-account --key-file ${serviceAccountFile}`, {stdio: 'inherit'});
