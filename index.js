@@ -12,14 +12,20 @@ async function run() {
 
     console.log('Copy SERVICE_ACCOUNT');
 
-    fs.writeFileSync(serviceAccountFile, core.getInput('service-account'));
+    await fs.promises.writeFile(serviceAccountFile, core.getInput('service-account'))
 
-    console.log(core.getInput('service-account'))
-    console.log(serviceAccountFile)
+    const serviceCount = await fs.promises.readFile(serviceAccountFile, 'utf8');
+
+    // fs.writeFileSync(serviceAccountFile, core.getInput('service-account'));
+
+    console.log(serviceCount)
+    
+    const serviceAccountParsed = JSON.parse(serviceAccountFile);
+    
     console.log(serviceAccountParsed)
 
-    const serviceAccountParsed = JSON.parse(serviceAccountFile);
-
+    core.endGroup();
+    
     // console.log('Activate SERVICE_ACCOUNT');
     // execSync(`gcloud auth activate-service-account --key-file ${serviceAccountFile}`, {stdio: 'inherit'});
     // core.endGroup();
