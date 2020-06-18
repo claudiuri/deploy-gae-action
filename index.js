@@ -9,13 +9,15 @@ async function run() {
     const serviceAccountFile = `/tmp/${(new Date()).getTime()}.json`;
     
     core.startGroup('Processing SERVICE_ACCOUNT');
-    
+
     console.log('Copy SERVICE_ACCOUNT');
 
     fs.writeFileSync(serviceAccountFile, core.getInput('service-account'));
 
     const serviceAccountParsed = JSON.parse(serviceAccountFile);
 
+    console.log(core.getInput('service-account'))
+    console.log(serviceAccountFile)
     console.log(serviceAccountParsed)
 
 
