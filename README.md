@@ -21,10 +21,13 @@ To test. Default `false`. PS: If true does not deploy
 
 ## :clipboard: Example usage
 
-uses: claudiuri/deploy-gae-action@master
-with:
-  service-account:  ${{ secrets.SERVICE_ACCOUNT }}
-  project-id: ${{ secrets.PROJECT_ID }}
+```yaml
+- name: Deploy to Google App Engine
+  uses: claudiuri/deploy-gae-action@master
+  with:
+    service-account:  ${{ secrets.SERVICE_ACCOUNT }}
+    project-id: ${{ secrets.PROJECT_ID }}
+```
 
 ## :memo: License
 
