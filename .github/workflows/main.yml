@@ -10,8 +10,5 @@ jobs:
       uses: claudiuri/deploy-gae-action@master
       with:
         service-account:  ${{ secrets.SERVICE_ACCOUNT }}
-        project-name: 'vidly-280513'
+        project-id: ${{ secrets.PROJECT_ID }}
         debug: true
-    # Use the output from the `hello` step
-    # - name: Get the output time
-    #   run: echo "The time was ${{ steps.hello.outputs.time }}"

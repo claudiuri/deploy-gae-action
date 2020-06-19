@@ -1,18 +1,15 @@
 name: 'Deploy App Engine'
-description: 'Greet someone and record the time'
+description: 'This action allowed you publish application to Google App Engine'
 inputs:
   service-account:
     description: 'Service account file'
     required: true
-  project-name:
-    description: 'Project name'
+  project-id:
+    description: 'Project id'
     required: true
   debug:
     description: 'Debug action'
     dafault: false
-# outputs:
-#   projectName: # id of output
-#     description: 'Project name in service account file'
 runs:
   using: 'node12'
   main: 'index.js'

@@ -1,21 +1,31 @@
-# Hello world javascript action
+<h1 align="center">
+ Deploy app to Google App Engine :rocket:
+</h1>
 
-This action prints "Hello World" or "Hello" + the name of a person to greet to the log.
+<p align="center">This action allowed you publish application to <a href="https://cloud.google.com/appengine/">Google App Engine</a></p>
 
-## Inputs
+## :ticket: Inputs
 
-### `who-to-greet`
+### `service-account`
 
-**Required** The name of the person to greet. Default `"World"`.
+**Required** The service account private key (JSON), you can know how to create one [here](https://cloud.google.com/iam/docs/creating-managing-service-account-keys).
 
-## Outputs
 
-### `time`
+### `project-id`
 
-The time we greeted you.
+**Required** The project-id in service account.
 
-## Example usage
+### `debug`
 
-uses: actions/hello-world-javascript-action@v1
+To test. Default `false`. PS: If true does not deploy
+
+## :clipboard: Example usage
+
+uses: claudiuri/deploy-gae-action@master
 with:
-  who-to-greet: 'Mona the Octocat'
+  service-account:  ${{ secrets.SERVICE_ACCOUNT }}
+  project-id: ${{ secrets.PROJECT_ID }}
+
+## :memo: License
+
+This project is under license from MIT. See the [LICENSE](/LICENSE) file for more details.
