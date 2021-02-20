@@ -1,6 +1,7 @@
 const core = require('@actions/core');
 const execSync = require('child_process').execSync;
 const fs = require('fs');
+const path = require('path');
 
 async function run() {
   try {
@@ -8,6 +9,7 @@ async function run() {
     const serviceAccountFile = `/tmp/${(new Date()).getTime()}.json`; // Create temp json
     const projectName = core.getInput('project-id');
     const isDebug = core.getInput('debug');
+    const projectPath = path.join(process.cwd(), core.getInput('path'))
 
     core.startGroup('Processing service account');
     console.log('Copy service account');
@@ -20,6 +22,8 @@ async function run() {
     core.startGroup('Set Google Clound project');
     execSync(`gcloud config set project ${projectName}`, {stdio: 'inherit'});
     core.endGroup();
+    
+    execSync(`cd ${projectPath}`, {stdio: 'inherit'});
 
     if (isDebug) {
 
@@ -27,7 +31,7 @@ async function run() {
       execSync(`gcloud info`, {stdio: 'inherit'});
       core.endGroup();
     } else {
-
+      
       core.startGroup('Depoy project');
       execSync(`gcloud app deploy`, {stdio: 'inherit'});
       core.endGroup();
